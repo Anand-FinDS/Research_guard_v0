@@ -1,4 +1,4 @@
-"""python run_demo.py --mode unsafe|guarded|agntid [--scenario 5]"""
+"""python run_demo.py --mode unsafe|guarded|agntid [--scenario R2]"""
 import argparse
 import asyncio
 

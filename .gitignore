@@ -3,3 +3,4 @@
 logs/
 outbox/
 __pycache__/
+workbook.ipynb

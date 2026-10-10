@@ -3,21 +3,38 @@
     "display_name": "Retriever",
     "owner": "research-desk",
     "purpose": "Fetch market data and filings for covered, non-restricted stocks",
-    "allowed_tools": ["get_stock_data", "get_filing"],
-    "operable_by_roles": ["analyst", "intern"]
+    "allowed_tools": [
+      "get_stock_data",
+      "get_filing",
+      "get_financials",
+      "search_filings"
+    ],
+    "operable_by_roles": [
+      "analyst",
+      "intern"
+    ]
   },
   "research-guard.writer": {
     "display_name": "Writer",
     "owner": "research-desk",
     "purpose": "Draft a short research note and save it as a draft",
-    "allowed_tools": ["save_draft"],
-    "operable_by_roles": ["analyst", "intern"]
+    "allowed_tools": [
+      "save_draft"
+    ],
+    "operable_by_roles": [
+      "analyst",
+      "intern"
+    ]
   },
   "research-guard.distributor": {
     "display_name": "Distributor",
     "owner": "research-desk",
     "purpose": "Send approved notes to permitted recipients",
-    "allowed_tools": ["send_note"],
-    "operable_by_roles": ["analyst"]
+    "allowed_tools": [
+      "send_note"
+    ],
+    "operable_by_roles": [
+      "analyst"
+    ]
   }
 }

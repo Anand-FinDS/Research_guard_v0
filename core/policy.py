@@ -5,6 +5,9 @@ from dataclasses import dataclass
 from datetime import date
 from config import DATA, POLICIES, today
 
+V0_DATA_TOOLS = ("get_stock_data", "get_filing")
+AFRS_TOOLS = ("get_financials", "search_filings")
+
 
 @dataclass
 class Decision:
@@ -27,6 +30,7 @@ class LocalPolicyEngine:
         self.quiet = _load(DATA / "quiet_periods.json")
         self.approvals = _load(DATA / "approvals.json")
         self.internal = set(self.policy["internal_domains"])
+        self.afrs_coverage = set(self.policy["afrs_coverage"])
 
     def evaluate(self, agent_id: str, user_id: str, tool: str, args: dict) -> Decision:
         agent = self.agents.get(agent_id)
@@ -43,11 +47,14 @@ class LocalPolicyEngine:
 
         ticker = str(args.get("ticker", "")).upper()
 
-        if tool in ("get_stock_data", "get_filing"):
+        if tool in V0_DATA_TOOLS:
             if ticker not in self.stocks or not self.stocks[ticker]["covered"]:
                 return Decision(False, "coverage_only", f"{ticker} is not in coverage")
 
-        if tool in ("get_stock_data", "get_filing", "send_note") and ticker in self.restricted:
+        if tool in AFRS_TOOLS and ticker not in self.afrs_coverage:
+            return Decision(False, "coverage_only", f"{ticker} is not in AFRS coverage")
+
+        if tool in (*V0_DATA_TOOLS, *AFRS_TOOLS, "send_note") and ticker in self.restricted:
             return Decision(False, "restricted_list", f"{ticker} is on the restricted list")
 
         if tool == "send_note":

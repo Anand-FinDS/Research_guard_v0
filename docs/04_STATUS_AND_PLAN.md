@@ -10,6 +10,8 @@ Verified: unsafe + guarded with `LLM_MODEL=mock` on FastMCP 4.1 / LangGraph 1.2 
 behave as expected. **Not verified**: real-LLM mode (sandbox had no Groq access) and `agntid` mode
 (written from SDK README quick start only).
 
+Verified locally 10 Oct 2026: research-guard .venv (prompt: guard) created, v0 guarded run passes all 7 scenarios. v0 needs data_server (:8001) and comms_server (:8002) running: python -m mcp_servers.data_server / python -m mcp_servers.comms_server from repo root. Folder still named research-guard-v0 (rename later = recreate .venv).
+
 v0 layout:
 ```
 config.py  requirements.txt  .env.example  scenarios.py  run_demo.py
@@ -36,6 +38,9 @@ v1 evolves this codebase; keep the gateway / task / audit pattern.
    Notes: AFRS returns delta_qoq/yoy = null → fetch prior period for YoY in step 3; chunks are
    sentence-sized → use k=8–10 and targeted queries in the Research fetch template.
    Remaining: repoint research-guard Research agent to :8003.
+
+   ✅ Step 1 complete (10 Oct 2026). afrs_server verified; Retriever routes MSFT → afrs_server (fixed template in agents/graph.py), other tickers → v0 data_server (temporary, removed in step 4). Gateway connects to all servers in config.MCP_SERVERS with clear "not reachable" errors. local_policy.json has afrs_coverage; Retriever granted get_financials/search_filings. Guarded run: v0 scenarios unchanged + M1 distributed. Demo needs 4 terminals (afrs, data, comms, run_demo).
+
 2. `news_server` (Serper): structured items incl. `tickers_mentioned`; fixtures mode + live mode;
    restricted-name redaction; param limits.
 3. Writer → 1–2 page report (results, guidance, latest developments, sources).
@@ -64,8 +69,26 @@ Steps 1–4 testable from CLI before any UI.
 - Serper free tier limits; use fixtures for the demo.
 - Gmail: send only to own test addresses; OAuth token stays in comms_server.
 - Screener.in rejected: India-only (no MSFT), no official API (scraping/ToS risk).
+- GitHub: private repo now, public at submission. Reviewers can't run afrs_server (separate repo) — decide at submission: bundle a copy or default to AFRS_STUB=1.
 
 ## Optional extensions (only if core is done)
 - Peer comparison tool where peer set includes a restricted ticker (aggregation-leak case).
 - In-process guardrail vs proxy comparison slide (guardrail missing on one agent → leak; proxy holds).
 - Promptfoo red-team config → block-rate metric.
+
+
+## Phase 0 — AgntID spike: DONE (10 Oct 2026)
+- Runtime 2.0.0 in Docker (AFRS\agntid-runtime), connected to portal as research-guard-runtime, Medium profile.
+- MCP servers registered via host.docker.internal: afrs (:8003), comms (:8002). Portal prefix = MCP_SERVERS key.
+- Classifications: save_draft corrected OTHER→write (Medium excludes OTHER); send_note WRITE/MESSAGING, visible under Medium.
+- Policies: get_financials ticker Exact "MSFT" (search_filings: confirm). Visual Editor supports Prefix/Suffix/Contains/Length/Exact; Advanced tab = likely Rego.
+- SDK 0.2.0 from source (AFRS\agntid-python). Stack pinned: fastmcp 2.14.7, mcp 1.29.0 (SDK lock). Stale fastmcp 4.1 files had to be deleted by hand.
+- Gateway agntid mode: name→prefixed mapping, visibility block, stage-tagged denials (agntid:<step>), errors ≠ blocks. One task per agent step (root task + delegations → Phase 2). Duplicate _call fixed (@traceable was dropped).
+- Verified: check_agntid.py (MSFT allow / AAPL policy deny); run_demo guarded (7 v0 + M1) and agntid (M1 distributed).
+
+## Runbook
+1. MCP servers: afrs (AFRS_SERVER_HOST=0.0.0.0), comms (MCP_HOST=0.0.0.0), data (guarded only)
+2. Runtime: docker compose up -d / restart → Connected
+3. Warm-up: python check_agntid.py (first call after any restart can 404 on stale session)
+4. run_demo / Streamlit
+Never pip install into .venv with servers running.
