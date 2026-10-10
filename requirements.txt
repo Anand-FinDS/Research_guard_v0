@@ -1,0 +1,6 @@
+langgraph>=1.0
+fastmcp>=2.10
+litellm>=1.50
+python-dotenv>=1.0
+rich>=13.0
+# agntid-sdk   # install when the hackathon quick start arrives

@@ -1,0 +1,10 @@
+{
+  "ABCM": {"name": "ABC Motors", "sector": "Autos", "covered": true,
+           "price": 1840.5, "mcap_cr": 52400, "pe": 24.1, "rev_growth_yoy": 0.142, "ebitda_margin": 0.128},
+  "XYZL": {"name": "XYZ Ltd", "sector": "Industrials", "covered": true,
+           "price": 612.0, "mcap_cr": 18900, "pe": 31.5, "rev_growth_yoy": 0.087, "ebitda_margin": 0.161},
+  "QRST": {"name": "QRS Tractors", "sector": "Autos", "covered": true,
+           "price": 975.2, "mcap_cr": 21300, "pe": 19.8, "rev_growth_yoy": 0.064, "ebitda_margin": 0.112},
+  "PQRI": {"name": "PQR Industries", "sector": "Industrials", "covered": true,
+           "price": 2210.0, "mcap_cr": 40150, "pe": 27.3, "rev_growth_yoy": 0.118, "ebitda_margin": 0.174}
+}

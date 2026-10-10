@@ -1,0 +1,5 @@
+{
+  "anand":  {"role": "analyst",    "desk": "India Autos & Industrials"},
+  "intern": {"role": "intern",     "desk": "India Autos & Industrials"},
+  "compliance_officer": {"role": "compliance", "desk": "Research Compliance"}
+}

@@ -1,0 +1,4 @@
+{
+  "APR-1001": {"ticker": "ABCM", "recipient_domain": "client-fund.example",
+               "approved_by": "compliance_officer", "expires": "2026-12-31"}
+}

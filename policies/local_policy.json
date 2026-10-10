@@ -1,0 +1,12 @@
+{
+  "_comment": "Local stand-in for AgntID policies. Translate these rules to AgntID's format at the event.",
+  "internal_domains": ["researchguard.example"],
+  "rules": [
+    {"id": "user_can_operate_agent",   "applies_to": "*",              "desc": "User role must be allowed to operate this agent"},
+    {"id": "agent_tool_grant",         "applies_to": "*",              "desc": "Agent may only call tools granted to it"},
+    {"id": "coverage_only",            "applies_to": ["get_stock_data", "get_filing"], "desc": "Ticker must be in coverage"},
+    {"id": "restricted_list",          "applies_to": ["get_stock_data", "get_filing", "send_note"], "desc": "Block restricted-list tickers"},
+    {"id": "quiet_period",             "applies_to": ["send_note"],    "desc": "No distribution during a ticker's quiet period"},
+    {"id": "external_needs_approval",  "applies_to": ["send_note"],    "desc": "External recipients need a valid compliance approval_id for that ticker and domain"}
+  ]
+}
