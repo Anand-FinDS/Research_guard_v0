@@ -35,7 +35,7 @@ In a sell-side research workflow, an agent with send and data tools can:
 
 Giving an agent `send_note` does not mean every `send_note` call should be allowed. Each call needs to
 be checked against who is asking, for which ticker, to whom.
-
+   ![research-guard architecture](docs/architecture.png)
 ## How it is governed
 
 ```
