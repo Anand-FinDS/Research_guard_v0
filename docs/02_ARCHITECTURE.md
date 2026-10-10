@@ -1,4 +1,4 @@
-# Architecture (v1 plan)
+# Architecture (v1 plan (next upgrade)
 
 ## Flow
 ```
