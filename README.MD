@@ -5,7 +5,7 @@ A multi-agent equity research workflow that writes a Microsoft results report an
 without enforcement and once through AgntID. Agent code is identical in both runs.
 
 Built for the AgntID Hackathon ("Build an AI Agent You'd Actually Trust").
-
+![research-guard architecture](docs/architecture.svg)
 ## What the workflow does
 
 Four agents run in a fixed LangGraph pipeline:
